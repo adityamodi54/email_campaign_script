@@ -30,4 +30,5 @@ jobs:
       env:
         EMAIL: ${{ secrets.EMAIL }}
         PASSWORD: ${{ secrets.PASSWORD }}
+        EMAIL_ADDRESSES: ${{ secrets.EMAIL_ADDRESSES }}
       run: python app.py
