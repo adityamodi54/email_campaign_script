@@ -16,6 +16,12 @@ else:
 
 from_email = os.getenv("EMAIL")
 password = os.getenv("PASSWORD")
+email_addresses = os.getenv("EMAIL_ADDRESSES")
+
+if not email_addresses:
+    raise ValueError("EMAIL_ADDRESSES environment variable is not set")
+
+emails = email_addresses.split(',')
 
 # Function to send an email
 def send_email(to_email, subject, body):
@@ -58,7 +64,6 @@ def check_for_replies(email_id):
 def start_campaign():
     global emails, follow_up_subjects, follow_up_bodies, follow_up_count
     print("Starting the email campaign")
-    emails = input("Enter email addresses (separated by commas): ").split(',')
     subject = "Hello from Python!"
     body = "This is a test email."
 
