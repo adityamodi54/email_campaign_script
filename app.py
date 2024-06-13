@@ -7,17 +7,15 @@ import time
 from dotenv import load_dotenv
 import os
 
-# Load environment variables from .env file
-print("Loading environment variables from .env file")
-load_dotenv()
+# Load environment variables from .env file if it exists
+if os.path.exists('.env'):
+    print("Loading environment variables from .env file")
+    load_dotenv()
+else:
+    print("No .env file found, assuming environment variables are set in the system")
+
 from_email = os.getenv("EMAIL")
 password = os.getenv("PASSWORD")
-
-# Global variables
-emails = []
-follow_up_subjects = []
-follow_up_bodies = []
-follow_up_count = {}
 
 # Function to send an email
 def send_email(to_email, subject, body):
@@ -85,7 +83,7 @@ def start_campaign():
 # Function to check and send follow-up emails
 def check_and_follow_up():
     global emails, follow_up_subjects, follow_up_bodies, follow_up_count
-    print("Checking and sending follow-up emails")
+    print("Executing scheduled task: check_and_follow_up")
     for email_id in emails:
         email_id = email_id.strip()
         print(f"Processing {email_id}")
@@ -103,9 +101,4 @@ def check_and_follow_up():
 
 if __name__ == "__main__":
     start_campaign()
-    schedule.every(1).hours.do(check_and_follow_up)
-
-    while True:
-        print("Running scheduled tasks...")
-        schedule.run_pending()
-        time.sleep(1)
+    check_and_follow_up()
